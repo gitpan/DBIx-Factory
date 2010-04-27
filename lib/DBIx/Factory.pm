@@ -4,9 +4,10 @@ use Moose;
 use namespace::autoclean;
 use Scalar::Util qw/ blessed /;
 use Config::Any;
+use File::Spec;
 use DBI;
 
-our $VERSION = "0.08";
+our $VERSION = "0.09";
 
 has "config_base" => (
     is       => "ro",
@@ -73,15 +74,15 @@ sub _get_dbh {
     );
 }
 
-sub _isa_str     { @_ == 1 and not ref $_[0]  }
+sub _isa_str     { @_ == 1 and not ref $_[0]                }
 
-sub _isa_hashref { ref $_[0] eq "HASH"        }
+sub _isa_hashref { ref $_[0] eq "HASH"                      }
 
-sub _is_abs_path { substr($_[0], 0, 1) eq "/" }
+sub _is_abs_path { File::Spec->file_name_is_absolute($_[0]) }
 
-sub _is_empty    { $_[0] eq q{}               }
+sub _is_empty    { $_[0] eq q{}                             }
 
-sub _has_odd_elm { @_ % 2                     }
+sub _has_odd_elm { @_ % 2                                   }
 
 __PACKAGE__->meta->make_immutable;
 
@@ -161,7 +162,7 @@ the file extension, but must contain some items as follows:
 
 These items must be hash keys that contain simple string values,
 except C<attr> must contain hash for connection attributes such
-as C<RaiseError>, C<AutoCommit> or so. See L<SYNOPSIS> for
+as C<RaiseError>, C<AutoCommit> or so. See L</SYNOPSIS> for
 a simple example.
 
 Created connection info file(s), you can place them under
@@ -175,7 +176,7 @@ use connection info file(s) by specifying their absolute paths
 from "/", or relative paths from your current directory.
 
 Besides, you can get connection without any connection info file,
-by passing args to L<get_dbh> just like L<DBI::connect>.
+by passing args to L</get_dbh> just like L<DBI::connect>.
 
 =head1 METHODS
 
@@ -187,7 +188,7 @@ argument is specified, it assumes that C<$ENV{DBIF_BASE}> or
 an empty string (which is later assumed as your current directory)
 are specified as the base directory.
 
-When L<get_dbh> method is invoked as a class method, C<new>
+When L</get_dbh> method is invoked as a class method, L</new>
 will then be invoked internally.
 
 =head2 get_dbh
@@ -200,7 +201,7 @@ C<config_file> (path from config_base to the specific connection
 info file) with their values, or a simple string value which is
 used as C<config_file>, while $ENV{DBIF_BASE} or an empty string
 (if the $ENV is not defined) are used as C<config_base>.
-Both C<config_base> and C<config_file> are passed to L<new> method
+Both C<config_base> and C<config_file> are passed to L</new> method
 which will then be invoked.
 
 The second way is to invoke this method as an instance method.

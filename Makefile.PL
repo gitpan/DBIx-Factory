@@ -11,6 +11,7 @@ requires 'Moose';
 requires 'namespace::autoclean';
 requires 'Scalar::Util';
 requires 'Config::Any';
+requires 'File::Spec';
 requires 'DBI';
 
 test_requires 'Test::More';

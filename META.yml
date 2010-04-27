@@ -25,9 +25,10 @@ no_index:
 requires:
   Config::Any: 0
   DBI: 0
+  File::Spec: 0
   Moose: 0
   Scalar::Util: 0
   namespace::autoclean: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.08
+version: 0.09

@@ -34,3 +34,7 @@ Revision history for DBIx-Factory
         The namespace of this module has been changed to DBIx::Factory
         because DBI namespace is reserved for the official DBI project.
         Thanks to brian d foy for the indication.
+
+0.09    2010/04/27 [Bugfixes]
+        Fixed failing tests on Win32 due to the improper validation of the
+        absolute path.
